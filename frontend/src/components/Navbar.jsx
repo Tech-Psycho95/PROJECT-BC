@@ -4,24 +4,29 @@ import '../styles/navbar.css';
 
 const Navbar = () => {
   const [currentPath, setCurrentPath] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // Hydrate the path on the client to easily check the active route natively without react-router
   useEffect(() => {
     setCurrentPath(window.location.pathname);
-    
-    // Safety listener if window history pushState is used by other parts of the app
+    setIsLoggedIn(!!localStorage.getItem('token'));
+
     const handleLocationChange = () => {
       setCurrentPath(window.location.pathname);
+      setIsLoggedIn(!!localStorage.getItem('token'));
     };
-    
+
     window.addEventListener('popstate', handleLocationChange);
     return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
 
   const handleLogout = () => {
-    console.log('Logging out the user...');
-    // Directly navigate back to login root on logout
-    window.location.href = '/login';
+    const confirmed = window.confirm('Are you sure you want to log out?');
+    if (confirmed) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('analysisResult');
+      localStorage.removeItem('roadmapData');
+      window.location.href = '/';
+    }
   };
 
   return (
@@ -41,9 +46,11 @@ const Navbar = () => {
         >
           About
         </a>
-        <button className="btn-logout" onClick={handleLogout}>
-          Logout
-        </button>
+        {isLoggedIn && (
+          <button className="btn-logout" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
     </nav>
   );

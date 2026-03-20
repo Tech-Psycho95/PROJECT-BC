@@ -153,10 +153,7 @@ const Onboarding = () => {
           disabled={!isFormValid || isAnalyzing}
         >
           {isAnalyzing ? (
-            <>
               <span className="loading-spinner"></span>
-              Analyzing Skills...
-            </>
           ) : 'Analyze Skills'}
         </button>
       </div>

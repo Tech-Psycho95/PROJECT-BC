@@ -265,8 +265,8 @@ const Dashboard = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.7 }}
         >
-          <div className="section-header" style={{ marginBottom: '2rem' }}>
-            <h2>Learning Roadmap</h2>
+          <div className="section-header" style={{ marginBottom: '2rem', justifyContent: 'center' }}>
+            <h2 style={{ color: 'white', textTransform: 'uppercase', textAlign: 'center', width: '100%' }}>Learning Path</h2>
           </div>
 
           {isGenerating ? (

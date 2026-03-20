@@ -23,8 +23,10 @@ const Logo = () => {
     }
   };
 
+  const logoHref = typeof window !== 'undefined' && localStorage.getItem('token') ? '/dashboard' : '/';
+
   return (
-    <a href="/" style={styles.link} className="brand-logo" onMouseOver={(e) => e.currentTarget.style.opacity = '0.85'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
+    <a href={logoHref} style={styles.link} className="brand-logo" onMouseOver={(e) => e.currentTarget.style.opacity = '0.85'} onMouseOut={(e) => e.currentTarget.style.opacity = '1'}>
       <h1 style={styles.text}>STRIDE</h1>
     </a>
   );

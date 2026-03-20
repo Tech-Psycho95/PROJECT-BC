@@ -6,7 +6,7 @@ const About = () => {
     <div className="about-container">
       <div className="about-content">
         <div className="about-header">
-          <h1>AI Onboarding</h1>
+          <h1>STRIDE</h1>
           <p>Your personalized, intelligent path to bridging the gap between where you are and where you want to be.</p>
         </div>
 

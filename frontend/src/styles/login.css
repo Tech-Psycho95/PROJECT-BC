@@ -1,10 +1,11 @@
 /* login.css */
 .login-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f8fafc;
+  background-color: transparent;
   padding: 1rem;
   font-family:
     "Inter",
@@ -20,25 +21,57 @@
     "Segoe UI Symbol";
 }
 
+/* STRIDE branding above card */
+.login-branding {
+  text-align: center;
+  margin-bottom: 2rem;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.login-stride-logo {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-weight: 900;
+  font-size: 3.5rem;
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.login-stride-slogan {
+  color: rgba(203, 213, 225, 0.7);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  margin: 0.5rem 0 0;
+}
+
 .login-card {
-  background: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
   padding: 2.5rem 2rem;
   border-radius: 16px;
   box-shadow:
-    0 10px 25px -5px rgba(0, 0, 0, 0.05),
-    0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    0 10px 25px -5px rgba(0, 0, 0, 0.2),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
   width: 100%;
   max-width: 400px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition:
     transform 0.2s ease,
     box-shadow 0.2s ease;
+  animation: fadeInUp 0.5s ease-out;
 }
 
 .login-card:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    0 20px 25px -5px rgba(0, 0, 0, 0.15),
+    0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
 .login-header {
@@ -48,7 +81,7 @@
 
 .login-header h2 {
   margin: 0;
-  color: #0f172a;
+  color: #ffffff;
   font-size: 1.75rem;
   font-weight: 700;
   letter-spacing: -0.025em;
@@ -56,7 +89,7 @@
 
 .login-header p {
   margin-top: 0.5rem;
-  color: #64748b;
+  color: #94a3b8;
   font-size: 0.875rem;
 }
 
@@ -67,7 +100,7 @@
 .form-group label {
   display: block;
   margin-bottom: 0.375rem;
-  color: #334155;
+  color: #cbd5e1;
   font-size: 0.875rem;
   font-weight: 500;
 }
@@ -75,17 +108,17 @@
 .form-group input {
   width: 100%;
   padding: 0.75rem 1rem;
-  border: 1px solid #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 8px;
   font-size: 0.95rem;
-  color: #0f172a;
-  background-color: #ffffff;
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.05);
   transition: all 0.2s ease;
   box-sizing: border-box;
 }
 
 .form-group input::placeholder {
-  color: #94a3b8;
+  color: #64748b;
 }
 
 .form-group input:focus {
@@ -109,6 +142,14 @@
   font-weight: 500;
 }
 
+.password-guidelines {
+  color: #64748b;
+  font-size: 0.7rem;
+  margin-top: 0.375rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+}
+
 .login-button {
   width: 100%;
   padding: 0.875rem;
@@ -126,6 +167,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: 48px;
 }
 
 .login-button:hover:not(:disabled) {
@@ -137,20 +179,20 @@
 }
 
 .login-button:disabled {
-  background-color: #94a3b8;
+  background-color: #1e293b;
   cursor: not-allowed;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
+/* Spinner-only loading (no text) */
 .loading-spinner {
   display: inline-block;
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  width: 22px;
+  height: 22px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   border-top-color: #ffffff;
-  animation: spin 0.8s ease-in-out infinite;
-  margin-right: 0.5rem;
+  animation: spin 0.7s ease-in-out infinite;
 }
 
 @keyframes spin {
@@ -159,10 +201,43 @@
   }
 }
 
+/* Login/SignUp switch */
+.login-switch {
+  text-align: center;
+  margin-top: 1.25rem;
+}
+
+.switch-btn {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: color 0.2s ease;
+  padding: 0.5rem;
+}
+
+.switch-btn:hover {
+  color: #e2e8f0;
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (max-width: 480px) {
   .login-card {
     padding: 2rem 1.5rem;
-    box-shadow: none;
-    border: 1px solid #e2e8f0;
+  }
+
+  .login-stride-logo {
+    font-size: 2.5rem;
   }
 }

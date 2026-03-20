@@ -87,9 +87,10 @@ Return STRICT JSON only, exactly matching this structure:
 
 Rules:
 - READ the resume PDF/text very carefully to extract ALL skills the candidate has
-- extractedSkills must contain EVERY skill found in the resume
-- requiredSkills must contain skills from the job description
-- gapAnalysis.toLearn must only contain skills that are in requiredSkills but NOT in extractedSkills
+- READ the job description text carefully — it may be plain text or a PDF; extract ALL required skills from it
+- extractedSkills must contain EVERY skill found in the resume — NEVER return an empty array
+- requiredSkills must contain ALL skills mentioned in the job description — NEVER return an empty array if a JD is provided
+- gapAnalysis.toLearn must only contain skills that are in requiredSkills but NOT in extractedSkills — NEVER return an empty array if there are missing skills
 - gapAnalysis.toSkip must only contain skills that are in BOTH requiredSkills AND extractedSkills
 - For extractedSkills level, STRICTLY use one of: "beginner", "intermediate", "advanced"
 - Normalize skill names

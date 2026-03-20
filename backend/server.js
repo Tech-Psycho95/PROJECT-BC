@@ -2,7 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
-import { PDFParse } from 'pdf-parse';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const pdfParse = require('pdf-parse');
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import skillRoutes from './routes/skillRoutes.js';
@@ -31,16 +33,13 @@ app.use('/analyze-skills', skillRoutes);
 app.post('/generate-roadmap', generateRoadmapController);
 
 // NEW /analyze-profile Endpoint from Onboarding Request
-app.post('/analyze-profile', upload.fields([
-    { name: 'resume', maxCount: 1 },
-    { name: 'jobDescription', maxCount: 1 }
-]), async (req, res) => {
+app.post('/analyze-profile', upload.any(), async (req, res) => {
     console.log(`\n--- [${new Date().toISOString()}] POST /analyze-profile ---`);
     console.log('Request received successfully from the frontend onboarding flow!');
     
-    // Check and log the uploaded parts
-    const resumeFile = req.files?.['resume']?.[0];
-    const jdFile = req.files?.['jobDescription']?.[0];
+    // upload.any() returns a flat array of files — find by fieldname
+    const resumeFile = req.files?.find(f => f.fieldname === 'resume');
+    const jdFile = req.files?.find(f => f.fieldname === 'jobDescription');
     const jdText = req.body.jobDescription;
 
     let resumeBuffer = null; // Raw PDF buffer for multimodal
@@ -65,8 +64,7 @@ app.post('/analyze-profile', upload.fields([
         console.log("Job description received:", jdFile.originalname);
         if (jdFile.originalname.toLowerCase().endsWith('.pdf')) {
             try {
-                const jdPdfParser = new PDFParse({ data: jdFile.buffer });
-                const jdPdfData = await jdPdfParser.getText();
+                const jdPdfData = await pdfParse(jdFile.buffer);
                 jdString = jdPdfData.text;
                 console.log("JD PDF text extracted, length:", jdString.length);
             } catch (pdfErr) {

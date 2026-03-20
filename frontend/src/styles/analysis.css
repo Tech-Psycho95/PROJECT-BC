@@ -1,0 +1,203 @@
+/* analysis.css */
+.analysis-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  padding: 4rem 1.5rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.analysis-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeInDown 0.5s ease-out forwards;
+}
+
+.analysis-header h1 {
+  color: #0f172a;
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.025em;
+}
+
+.analysis-header p {
+  color: #64748b;
+  font-size: 1.125rem;
+  margin: 0;
+  max-width: 600px;
+}
+
+.analysis-content {
+  width: 100%;
+  max-width: 950px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.cards-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.analysis-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.analysis-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 1rem;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: #1e293b;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.card-icon {
+  margin-right: 0.75rem;
+  font-size: 1.5rem;
+}
+
+.skill-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skill-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+}
+
+.skill-name {
+  color: #334155;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.skill-level {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.level-beginner { background-color: #dbeafe; color: #1d4ed8; }
+.level-intermediate { background-color: #fef3c7; color: #b45309; }
+.level-advanced { background-color: #dcfce3; color: #15803d; }
+
+.status-badge {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.status-require { background-color: #f1f5f9; color: #475569; }
+
+.gap-card {
+  grid-column: 1 / -1;
+  background-color: #ffffff;
+  border-color: #cbd5e1;
+}
+
+.gap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.gap-section h4 {
+  color: #475569;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reason-text {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+  margin-top: 0.25rem;
+}
+
+.skip-item .skill-name {
+  color: #94a3b8;
+  text-decoration: line-through;
+}
+
+.btn-generate {
+  background-color: #0f172a;
+  color: white;
+  border: none;
+  padding: 1.125rem 2.5rem;
+  border-radius: 8px;
+  font-size: 1.125rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.2);
+  transition: all 0.2s ease;
+  animation: fadeInUp 0.5s ease-out forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.btn-generate:hover {
+  background-color: #1e293b;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 12px -2px rgba(15, 23, 42, 0.25);
+}
+
+.btn-generate:active {
+  transform: translateY(0);
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .cards-row, .gap-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}

@@ -47,7 +47,7 @@ const Onboarding = () => {
         formData.append('jobDescription', jdText);
       }
 
-      const response = await fetch('http://localhost:5000/analyze-profile', {
+      const response = await fetch('http://localhost:5005/analyze-profile', {
         method: 'POST',
         body: formData,
       });
@@ -59,6 +59,8 @@ const Onboarding = () => {
       const result = await response.json();
       console.log('Analysis Complete!', result);
       
+      // Save to localStorage so the Analysis page can pick it up
+      localStorage.setItem('analysisResult', JSON.stringify(result));
       window.location.href = '/analysis';
     } catch (error) {
       console.error(error);

@@ -1,6 +1,8 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
+import { PDFParse } from 'pdf-parse';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import skillRoutes from './routes/skillRoutes.js';
@@ -41,20 +43,39 @@ app.post('/analyze-profile', upload.fields([
     const jdFile = req.files?.['jobDescription']?.[0];
     const jdText = req.body.jobDescription;
 
-    let resumeString = '';
+    let resumeBuffer = null; // Raw PDF buffer for multimodal
+    let resumeString = '';   // Text for non-PDF files
     let jdString = '';
 
     if (resumeFile) {
-        resumeString = resumeFile.buffer.toString('utf-8');
         console.log("Resume received:", resumeFile.originalname);
-        console.log("resumeText length:", resumeString.length);
-        console.log("Preview:\n", resumeString.slice(0, 200));
+        if (resumeFile.originalname.toLowerCase().endsWith('.pdf')) {
+            // Send the raw PDF to Gemini multimodal (handles scanned/image PDFs)
+            resumeBuffer = resumeFile.buffer;
+            console.log("Resume PDF buffer size:", resumeBuffer.length);
+        } else {
+            resumeString = resumeFile.buffer.toString('utf-8');
+            console.log("Resume text length:", resumeString.length);
+        }
     } else {
         console.log('⚠️ Warning: No resume file was received');
     }
 
     if (jdFile) {
-        jdString = jdFile.buffer.toString('utf-8');
+        console.log("Job description received:", jdFile.originalname);
+        if (jdFile.originalname.toLowerCase().endsWith('.pdf')) {
+            try {
+                const jdPdfParser = new PDFParse({ data: jdFile.buffer });
+                const jdPdfData = await jdPdfParser.getText();
+                jdString = jdPdfData.text;
+                console.log("JD PDF text extracted, length:", jdString.length);
+            } catch (pdfErr) {
+                console.error("JD PDF parse error:", pdfErr.message);
+                jdString = jdFile.buffer.toString('utf-8');
+            }
+        } else {
+            jdString = jdFile.buffer.toString('utf-8');
+        }
         console.log("Job description file received length:", jdString.length);
     } else if (jdText) {
         jdString = jdText;
@@ -64,8 +85,8 @@ app.post('/analyze-profile', upload.fields([
     }
 
     try {
-        console.log("Calling LLM...");
-        const llmResult = await extractSkills(resumeString, jdString);
+        console.log("Calling LLM (multimodal)...");
+        const llmResult = await extractSkills(resumeBuffer, resumeString, jdString);
         console.log("Parsed response:\n", JSON.stringify(llmResult, null, 2));
         
         // Return ONLY the LLM response without static fallback

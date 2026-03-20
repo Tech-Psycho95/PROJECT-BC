@@ -1,6 +1,6 @@
 // Handles backend API calls
 
-const BASE_URL = 'http://localhost:5000/api';
+const BASE_URL = 'http://localhost:5005/api';
 
 export const uploadResume = async (file) => {
   // Placeholder for resume upload API
